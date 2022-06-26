@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "TEST this is a TEST"
+echo "About to commit...\n"

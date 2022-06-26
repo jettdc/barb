@@ -1,7 +1,7 @@
-from .install import install_base_hooks
-from .hooks import get_hook_names
-from .run import run_hook
-from .init import init
+from src.install import install_base_hooks
+from src.hooks import get_hook_names
+from src.run import run_hook
+from src.init import init
 import argparse
 
 

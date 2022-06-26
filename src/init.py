@@ -1,4 +1,4 @@
-from .install import install_base_hooks
+from src.install import install_base_hooks
 import os
 
 
