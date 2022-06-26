@@ -3,16 +3,17 @@ import os
 
 
 def _is_initialized():
-    return os.path.isdir('./.py-hook')
+    return os.path.isdir('./.barb')
+
 
 def _initialize():
-    os.mkdir('.py-hook')
+    os.mkdir('.barb')
     install_base_hooks()
 
 
 def init():
     if _is_initialized():
-        print('py-hook already initialized. To install the hooks, run\n\tpy-hook install')
+        print('barb already initialized. To install the hooks, run\n\tbarb install')
         return
 
     _initialize()

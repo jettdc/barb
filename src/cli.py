@@ -1,11 +1,12 @@
-from .init import init
+from .install import install_base_hooks
 from .hooks import get_hook_names
 from .run import run_hook
-from .install import install_base_hooks
+from .init import init
 import argparse
 
+
 def main():
-    parser = argparse.ArgumentParser(prog='py-hook',
+    parser = argparse.ArgumentParser(prog='barb',
                                      description='Python Hooker')
     parser.add_argument('command', type=str, nargs='+')
 
@@ -29,6 +30,7 @@ def main():
     else:
         print("Unrecognized ocommand.")
 
+
 if __name__ == "__main__":
-    main()
     # PYTHONPATH="`pwd`/." python3 setup.py install
+    main()

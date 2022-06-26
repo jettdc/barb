@@ -1,7 +1,7 @@
-import os.path
-from enum import Enum
-import stat
 from typing import List
+from enum import Enum
+import os.path
+import stat
 
 
 class Hook(Enum):
@@ -31,16 +31,12 @@ def get_hook_names() -> List[str]:
     return names
 
 
-def _hook_exists(hook_type: Hook):
-    return os.path.exists(f'./.git/hooks/{hook_type.value}')
-
-
-def _make_executable(path):
+def _make_executable(path: str):
     st = os.stat(path)
     os.chmod(path, st.st_mode | stat.S_IEXEC)
 
 
-def _make_hook(hook_type: Hook, script):
+def _make_hook(hook_type: Hook, script: str):
     path = f'./.git/hooks/{hook_type.value}'
     with open(path, 'w') as file:
         file.write(script)
@@ -48,8 +44,5 @@ def _make_hook(hook_type: Hook, script):
     _make_executable(path)
 
 
-def add(hook_type: Hook, script):
-    # if _hook_exists(hook_type):
-    #     raise Exception(f"Hook {hook_type} already exists, cannot register.")
-
+def add(hook_type: Hook, script: str):
     _make_hook(hook_type, script)

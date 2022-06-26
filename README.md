@@ -1,8 +1,25 @@
-# py-hook
-Hassle free git hooks for python projects.
+# barb
+Hassle free git hooks for python projects
 
-- `pip install py-hook`
-- `py-hook init`
-- look how husky does it, but initial thought is to just create all the hooks at the beginning and make them point to package functions that each time look to see if a user defined hook is available, otherwise do nothing.
-- creates a .py-hook dir
-- files within the dir are interpreted as hooks based on names
+## Installation
+`pip install barb`
+
+## Initializing a new project
+`barb init`
+
+Running this command both initializes the `.barb` directory as well as runs the `barb install` command.
+
+## Installing barb
+To register the hooks under the `.barb` directory with git, run `barb install`
+
+## Creating a hook
+Create a script under the `.barb` directory with the same name as the git hook you are attempting to create.
+
+ex.
+```shell
+#!/bin/sh
+echo "Hello, World!"
+```
+
+### TODO
+- [ ] if not a git repository
