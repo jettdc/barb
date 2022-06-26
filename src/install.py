@@ -2,7 +2,7 @@ from .hooks import Hook, add
 
 
 def _get_base_hook(name: str) -> str:
-    return f'#!/bin/sh\n\nbarb run {name}'
+    return f'#!/bin/sh\n\nbarb run {name}\n'
 
 
 def _install(hook: Hook):

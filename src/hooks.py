@@ -38,7 +38,7 @@ def _make_executable(path: str):
 
 def _make_hook(hook_type: Hook, script: str):
     path = f'./.git/hooks/{hook_type.value}'
-    with open(path, 'w') as file:
+    with open(path, 'w', newline='\n') as file:
         file.write(script)
 
     _make_executable(path)
