@@ -17,6 +17,7 @@ def _execute_shell_hook(hook_type: str):
 
 
 def _execute_python_hook(hook_type: str):
+    print("EXECUTING", hook_type)
     spec = importlib.util.spec_from_file_location(hook_type, f"./.barb/{hook_type}.py")
     foo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(foo)
