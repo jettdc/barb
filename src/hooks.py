@@ -1,6 +1,7 @@
 import os.path
 from enum import Enum
 import stat
+from pathlib import Path
 
 
 class Hook(Enum):
@@ -12,9 +13,8 @@ def _hook_exists(hook_type: Hook):
 
 
 def _make_executable(path):
-    mode = os.stat(path).st_mode
-    mode |= (mode & 0o444) >> 2  # copy R bits to X
-    os.chmod(path, mode)
+    f = Path(path)
+    f.chmod(f.stat().st_mode | stat.S_IEXEC)
 
 
 def _make_hook(hook_type: Hook, script):
