@@ -1,4 +1,4 @@
-# barb
+# barb 🪝
 Hassle free git hooks for python projects
 
 ## Installation
@@ -20,6 +20,3 @@ ex.
 #!/bin/sh
 echo "Hello, World!"
 ```
-
-### TODO
-- [ ] if not a git repository

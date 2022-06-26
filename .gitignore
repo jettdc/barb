@@ -131,3 +131,5 @@ dmypy.json
 test.py
 .idea
 *.idea
+
+publish.sh

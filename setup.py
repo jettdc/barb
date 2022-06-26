@@ -20,6 +20,3 @@ setup(
     },
     keywords='hooks git githooks automation'
 )
-
-# python3 setup.py sdist bdist_wheel
-# twine upload dist/*
