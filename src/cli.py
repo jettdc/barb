@@ -33,5 +33,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # PYTHONPATH="`pwd`/." python3 setup.py install
     main()

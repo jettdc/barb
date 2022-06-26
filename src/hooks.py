@@ -36,13 +36,9 @@ def _make_executable(path: str):
     os.chmod(path, st.st_mode | stat.S_IEXEC)
 
 
-def _make_hook(hook_type: Hook, script: str):
+def add(hook_type: Hook, script: str):
     path = f'./.git/hooks/{hook_type.value}'
     with open(path, 'w', newline='\n') as file:
         file.write(script)
 
     _make_executable(path)
-
-
-def add(hook_type: Hook, script: str):
-    _make_hook(hook_type, script)

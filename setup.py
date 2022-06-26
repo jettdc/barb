@@ -5,10 +5,11 @@ with open('README.md') as f:
 
 setup(
     name='barb',
-    version='0.0.5',
+    version='0.0.7',
     author='Jett Crowson',
     author_email='jettcrowson@gmail.com',
     url='https://github.com/jettdc/barb',
+    description='Hassle free git hooks for python projects.',
     long_description=readme,
     long_description_content_type='text/markdown',
     license='MIT',
