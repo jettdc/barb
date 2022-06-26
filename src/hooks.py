@@ -10,19 +10,17 @@ class Hook(Enum):
 def _hook_exists(hook_type: Hook):
     return os.path.exists(f'./.git/hooks/{hook_type.value}')
 
+
 def _make_executable(path):
     mode = os.stat(path).st_mode
-    mode |= (mode & 0o444) >> 2    # copy R bits to X
+    mode |= (mode & 0o444) >> 2  # copy R bits to X
     os.chmod(path, mode)
+
 
 def _make_hook(hook_type: Hook, script):
     path = f'./.git/hooks/{hook_type.value}'
     with open(path, 'w') as file:
-        file.write("""
-        #!/bin/sh
-        
-        py-hook run pre-commit
-        """)
+        file.write(script)
 
     _make_executable(path)
 
