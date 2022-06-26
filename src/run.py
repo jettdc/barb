@@ -3,7 +3,7 @@ import subprocess
 
 
 def _py_hook_exists(hook_type: str) -> bool:
-    return os.path.exists(f'./.barb/{hook_type}')
+    return os.path.exists(f'./.barb/{hook_type}') or os.path.exists(f'./.barb/{hook_type}.py')
 
 
 def _execute_hook(hook_type: str):
