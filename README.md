@@ -2,6 +2,8 @@
 Hassle free git hooks for python projects
 
 ![PyPi Download](https://img.shields.io/pypi/v/barb)
+![PyPi Download](https://img.shields.io/pypi/l/barb)
+![PyPi Download](https://img.shields.io/pypi/pyversions/barb)
 
 ## Installation
 `pip install barb`

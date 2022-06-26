@@ -19,5 +19,6 @@ setup(
             'barb = src.cli:main'
         ]
     },
-    keywords='hooks git githooks automation'
+    keywords='hooks git githooks automation',
+    python_requires='>=3.5'
 )
