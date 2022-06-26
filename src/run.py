@@ -1,7 +1,6 @@
 import os.path
 import subprocess
 import importlib.util
-import sys
 
 
 def _get_py_hook_type(hook_type: str) -> None | str:
