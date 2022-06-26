@@ -1,19 +1,34 @@
 from .init import init
+from .hooks import get_hook_names
+from .run import run_hook
+from .install import install_base_hooks
 import argparse
 
 def main():
     parser = argparse.ArgumentParser(prog='py-hook',
                                      description='Python Hooker')
-    parser.add_argument('command', type=str)
+    parser.add_argument('command', type=str, nargs='+')
 
     command = parser.parse_args().command
-
-    if command == 'init':
+    if command[0] == 'init':
         init()
-    elif command == 'install':
-        print('installing')
+
+    elif command[0] == 'install':
+        install_base_hooks()
+
+    elif command[0] == 'run':
+        if len(command) < 2:
+            print('Must provide the name of the hook to run.')
+            return
+
+        if command[1] not in get_hook_names():
+            print('Invalid git hook type.')
+            return
+
+        run_hook(command[1])
     else:
-        print('Invalid command.')
+        print("Unrecognized ocommand.")
 
 if __name__ == "__main__":
     main()
+    # PYTHONPATH="`pwd`/." python3 setup.py install
