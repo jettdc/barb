@@ -12,9 +12,25 @@ def _hook_exists(hook_type: Hook):
     return os.path.exists(f'./.git/hooks/{hook_type.value}')
 
 
+def get_umask():
+    umask = os.umask(0)
+    os.umask(umask)
+    return umask
+
+
 def _make_executable(path):
-    f = Path(path)
-    f.chmod(f.stat().st_mode | stat.S_IEXEC)
+    os.chmod(
+        path,
+        os.stat(path).st_mode |
+        (
+                (
+                        stat.S_IXUSR |
+                        stat.S_IXGRP |
+                        stat.S_IXOTH
+                )
+                & ~get_umask()
+        )
+    )
 
 
 def _make_hook(hook_type: Hook, script):
