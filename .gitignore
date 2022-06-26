@@ -133,3 +133,4 @@ test.py
 *.idea
 
 publish.sh
+install.sh
