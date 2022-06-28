@@ -2,6 +2,7 @@ import importlib.util
 import os.path
 import subprocess
 import sys
+from src.config import Config
 import platform
 from src.hooks import Hook
 from src.logger import Logger
@@ -14,35 +15,26 @@ def _get_hook_path(hook: str):
         return None
 
     if os.path.isdir(f'./.barb/{hook}'):
-
+        files = os.listdir(f'./.barb/{hook}')
         op_sys = platform.system()
-        if op_sys == 'Linux' and os.path.isfile(f'./.barb/{hook}/linux'):
-            return f'./.barb/{hook}/linux'
-        elif op_sys == 'Linux' and os.path.isfile(f'./.barb/{hook}/linux.py'):
-            return f'./.barb/{hook}/linux.py'
-        elif op_sys == 'Windows' and os.path.isfile(f'./.barb/{hook}/windows'):
-            return f'./.barb/{hook}/windows'
-        elif op_sys == 'Windows' and os.path.isfile(f'./.barb/{hook}/windows.py'):
-            return f'./.barb/{hook}/windows.py'
-        elif op_sys == 'Darwin' and os.path.isfile(f'./.barb/{hook}/darwin'):
-            return f'./.barb/{hook}/darwin'
-        elif op_sys == 'Darwin' and os.path.isfile(f'./.barb/{hook}/darwin.py'):
-            return f'./.barb/{hook}/darwin.py'
 
-    elif os.path.isfile(f'./.barb/{hook}'):
-        return f'./.barb/{hook}'
-    elif os.path.isfile(f'./.barb/{hook}.py'):
-        return f'./.barb/{hook}.py'
-    else:
+        for file in files:
+            filename, ext = os.path.splitext(file)
+            if filename.lower() == op_sys.lower():
+                return f'./.barb/{hook}/{file}'
+
         return None
+
+    return f'./.barb/{hook}'
 
 
 def _get_exec_program() -> str:
-    operating_system = platform.system()
-    if operating_system == 'Linux' or operating_system == 'Darwin':
+    config = Config.get_instance()
+    operating_system = config.config.current_os
+    if operating_system == 'linux' or operating_system == 'darwin':
         return 'bash'
-    elif operating_system == 'Windows':
-        return 'powershell'
+    elif operating_system == 'windows':
+        return config.config.windows_interpreter
     else:
         log.error("Unsupported operating system.")
 
@@ -52,8 +44,20 @@ def _execute_shell_hook(hook_path: str, args):
         new_hook_path = hook_path
         for arg in args:
             new_hook_path += f' {str(arg)}'
+        interpreter_args = Config.get_instance().config.interpreter_args
+        process_result = subprocess.run([_get_exec_program()] + interpreter_args + [new_hook_path], shell=True, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE, timeout=2)
 
-        subprocess.run([_get_exec_program(), new_hook_path])
+        if process_result.returncode != 0:
+            log.error('Failed to run the git hook script.')
+            if process_result.stderr:
+                log.error(process_result.stderr.decode())
+            sys.exit(1)
+
+        if process_result.stdout:
+            log.info(process_result.stdout.decode())
+
+        # subprocess.run([_get_exec_program(), new_hook_path])
     except Exception as e:
         log.error(f'An exception occurred when attempting to execute the git hook {hook_path}.', e)
         sys.exit(1)

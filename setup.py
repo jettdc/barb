@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='barb',
-    version='0.2.0',
+    version='0.2.1',
     author='Jett Crowson',
     author_email='jettcrowson@gmail.com',
     url='https://github.com/jettdc/barb',

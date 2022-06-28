@@ -25,5 +25,5 @@ class Logger:
     def info(self, *args):
         print("[barb]", *args)
 
-    def error(self, *args):
-        print(f"{Color.Red.value}[barb] ERROR:", *args, end=f'{Color.Reset.value}\n')
+    def error(self, *args, color=False):
+        print(f"{Color.Red.value if color else ''}[barb] ERROR:", *args, end=f'{Color.Reset.value if color else ""}\n')

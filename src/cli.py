@@ -1,3 +1,5 @@
+import sys
+
 from src.install import install_base_hooks
 from src.hooks import get_hook_names
 from src.logger import Logger

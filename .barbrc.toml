@@ -2,4 +2,6 @@
 os-lock = 'windows'
 
 # powershell [default] | cmd | path-to-another-interpreter
-windows-interpreter = 'powershell'
+#windows-interpreter = 'powershell'
+#interpreter-args = ['-ExecutionPolicy', 'Unrestricted', '-File']
+windows-interpreter = 'bash'
