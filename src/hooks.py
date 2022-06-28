@@ -24,6 +24,17 @@ class Hook(Enum):
     PRE_PUSH = 'pre-push'
 
 
+def _get_args_for_hook(hook: Hook) -> int:
+    return {
+        Hook.APPLYPATCH_MSG: 1,
+        Hook.PRE_APPLYPATCH: 0,
+        Hook.POST_APPLYPATCH: 0,
+        Hook.PRE_COMMIT: 0,
+
+        Hook.PREPARE_COMMIT_MSG: ['commit_msg_file', 'commit_source?', 'sha1?'],
+    }[hook]
+
+
 def get_hook_names() -> List[str]:
     names = []
     for attr in Hook:
