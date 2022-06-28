@@ -52,5 +52,5 @@ Alternatively, when organized in folders, different scripts can be set to run de
 └── post-rewrite
     ├── linux.py
     ├── darwin
-    └── windows
+    └── windows.ps1
 ```
