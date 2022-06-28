@@ -14,6 +14,7 @@ def main():
 
     if command[0] == 'init':
         init()
+        print("[barb] Successfully initialized & installed git hooks.")
 
     elif command[0] == 'install':
         install_base_hooks()
@@ -30,7 +31,7 @@ def main():
 
         run_hook(command[1:])
     else:
-        print("Unrecognized ocommand.")
+        print("Unrecognized command.")
 
 
 if __name__ == "__main__":

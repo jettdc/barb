@@ -4,6 +4,7 @@ import subprocess
 import sys
 import platform
 
+
 def _get_py_hook_type(hook_type: str) -> str:
     if os.path.exists(f'./.barb/{hook_type}'):
         return 'SHELL'
@@ -13,16 +14,23 @@ def _get_py_hook_type(hook_type: str) -> str:
         return None
 
 
-def _execute_shell_hook(hook_type: str, args):
-    print(platform.system())
+def _get_exec_program() -> str:
+    operating_system = platform.system()
+    if operating_system == 'Linux' or operating_system == 'Darwin':
+        return 'bash'
+    elif operating_system == 'Windows':
+        return 'powershell'
+    else:
+        print("Unsupported operating system.")
 
+
+def _execute_shell_hook(hook_type: str, args):
     try:
         hook_path = f'./.barb/{hook_type}'
-        print(args)
         for arg in args:
             hook_path += f' {str(arg)}'
 
-        subprocess.run(['bash', hook_path])
+        subprocess.run([_get_exec_program(), hook_path])
     except Exception as e:
         print(f'An exception occurred when attempting to execute the git hook {hook_type}.')
         print(e)
