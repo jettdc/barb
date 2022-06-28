@@ -49,8 +49,11 @@ def _execute_python_hook(hook_type: str):
 
 
 def run_hook(params):
-    hook = params[1]
-    args = params[1:]
+    hook = params[0]
+    args = None
+
+    if len(params) > 1:
+        args = params[1:]
 
     hook_type = _get_py_hook_type(hook)
 
