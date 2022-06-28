@@ -5,3 +5,6 @@ os-lock = 'windows'
 #windows-interpreter = 'powershell'
 #interpreter-args = ['-ExecutionPolicy', 'Unrestricted', '-File']
 windows-interpreter = 'bash'
+
+# os.windows.interpreters.ps1 = 'powershell'
+# os.windows.interpreters.ps1.args = ['-ExecutionPolicy', 'Unrestricted', '-File']

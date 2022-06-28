@@ -70,6 +70,17 @@ class Config:
 
         raise BarbConfigurationException(f'os-lock config option not recognized. Choose from {str(ok)}')
 
+    def os_lock_ok(self):
+        if self.config.os_lock is None:
+            return True
+
+        elif self.config.os_lock == 'unix' and (self.config.current_os == 'linux' or self.config.current_os == 'darwin'):
+            return True
+
+        else:
+            return self.config.os_lock == self.config.current_os
+
+
     def _get_windows_interpreter(self) -> Union[str, None]:
         arg = self.loaded.get('windows-interpreter')
 
