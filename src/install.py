@@ -3,7 +3,11 @@ from typing import List
 
 
 def _get_base_hook(name: str, nargs: int) -> str:
-    return f'#!/bin/sh\n\nbarb run {name}{" $" * nargs}\n'
+    args = ''
+    for i in range(nargs):
+        args += f' ${i + 1}'
+
+    return f'#!/bin/sh\n\nbarb run {name}{args}\n'
 
 
 def install_base_hooks():
