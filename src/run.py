@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 
-def _get_py_hook_type(hook_type: str) -> None | str:
+def _get_py_hook_type(hook_type: str) -> str:
     if os.path.exists(f'./.barb/{hook_type}'):
         return 'SHELL'
     elif os.path.exists(f'./.barb/{hook_type}.py'):
