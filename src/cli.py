@@ -28,7 +28,7 @@ def main():
         if command[1] not in get_hook_names():
             print('Invalid git hook type.')
             return
-
+        print(command)
         run_hook(command[1:])
     else:
         print("Unrecognized command.")
@@ -36,3 +36,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    # Don't support interactive flag, doesn't work on windows
