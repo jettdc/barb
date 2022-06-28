@@ -47,10 +47,12 @@ def run_hook(params):
     hook = params[1]
     args = params[1:]
     hook_type = _get_py_hook_type(hook)
+
+    with open("t.txt", 'w') as f:
+        f.write(str(params))
     if not hook_type:
         return
 
-    print(f'[running hook {hook}]', flush=True)
     if hook_type == 'SHELL':
         _execute_shell_hook(hook, args)
     elif hook_type == 'PYTHON':
