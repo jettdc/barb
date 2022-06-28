@@ -11,7 +11,6 @@ def main():
     parser.add_argument('command', type=str, nargs='+')
 
     command = parser.parse_args().command
-    print(">>>>>>>>>", command[1:])
 
     if command[0] == 'init':
         init()

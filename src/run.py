@@ -50,7 +50,7 @@ def run_hook(params):
     if not hook_type:
         return
 
-    print(f'[running hook {hook}]')
+    print(f'[running hook {hook}]', flush=True)
     if hook_type == 'SHELL':
         _execute_shell_hook(hook, args)
     elif hook_type == 'PYTHON':
