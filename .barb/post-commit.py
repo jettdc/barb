@@ -1,2 +1,5 @@
+import sys
+
+
 def hook():
-    print("Finished up the commit.")
+    print(f"Finished up the commit: {str(sys.argv)}")

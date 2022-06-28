@@ -34,7 +34,7 @@ def main():
 
         run_hook(command[1:])
     else:
-        print("Unrecognized command.")
+        log.info("Unrecognized command. For a list of commands, type 'barb -h'")
 
 
 if __name__ == "__main__":
