@@ -1,5 +1,5 @@
 # barb
-Hassle free git hooks for python projects
+Hassle-free, cross-platform git hooks for python projects
 
 ![PyPi Download](https://img.shields.io/pypi/v/barb)
 ![PyPi Download](https://img.shields.io/pypi/l/barb)

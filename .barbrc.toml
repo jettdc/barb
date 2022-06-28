@@ -1,0 +1,5 @@
+# none [default] | windows | linux | osx | [windows, linux, ...]
+os-lock = 'windows'
+
+# powershell [default] | cmd | path-to-another-interpreter
+windows-interpreter = 'powershell'

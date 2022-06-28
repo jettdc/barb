@@ -15,7 +15,12 @@ def _get_py_hook_type(hook_type: str) -> None | str:
 
 def _execute_shell_hook(hook_type: str, args):
     try:
-        subprocess.run(['bash', f'./.barb/{hook_type}' + ' $' * len(args)])
+        hook_path = f'./.barb/{hook_type}'
+
+        for arg in args:
+            hook_path += str(arg)
+
+        subprocess.run(['bash', hook_path])
     except Exception as e:
         print(f'An exception occurred when attempting to execute the git hook {hook_type}.')
         print(e)
@@ -46,10 +51,8 @@ def _execute_python_hook(hook_type: str):
 def run_hook(params):
     hook = params[1]
     args = params[1:]
-    hook_type = _get_py_hook_type(hook)
 
-    subprocess.run(['ECHO', f'{str(params)}'])
-    sys.exit(1)
+    hook_type = _get_py_hook_type(hook)
 
     if not hook_type:
         return

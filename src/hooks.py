@@ -24,14 +24,25 @@ class Hook(Enum):
     PRE_PUSH = 'pre-push'
 
 
-def _get_args_for_hook(hook: Hook) -> int:
+def get_args_for_hook(hook: Hook):
     return {
-        Hook.APPLYPATCH_MSG: 1,
-        Hook.PRE_APPLYPATCH: 0,
-        Hook.POST_APPLYPATCH: 0,
-        Hook.PRE_COMMIT: 0,
-
-        Hook.PREPARE_COMMIT_MSG: ['commit_msg_file', 'commit_source?', 'sha1?'],
+        Hook.APPLYPATCH_MSG: ['commit_log_file'],
+        Hook.PRE_APPLYPATCH: [],
+        Hook.POST_APPLYPATCH: [],
+        Hook.PRE_COMMIT: [],
+        Hook.PREPARE_COMMIT_MSG: ['commit_msg_file', 'commit_source?', 'sha1?'], #? indc optional
+        Hook.COMMIT_MSG: ['commit_log_file'],
+        Hook.POST_COMMIT: [],
+        Hook.PRE_REBASE: ['upstream', 'rebase_branch?'],
+        Hook.POST_CHECKOUT: ['prev_head_ref', 'new_head_ref', 'branch_checkout_flag'],
+        Hook.POST_MERGE: ['status'],
+        Hook.PRE_PUSH: ['remote_name', 'remote_location'],
+        Hook.PRE_RECEIVE: [],
+        Hook.UPDATE: ['ref_updating', 'old_object', 'new_object'],
+        Hook.POST_RECEIVE: [],
+        Hook.POST_UPDATE: [], # variable args...
+        Hook.PRE_AUTO_GC: [],
+        Hook.POST_REWRITE: ['invoker'],
     }[hook]
 
 
