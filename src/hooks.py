@@ -30,7 +30,7 @@ def get_args_for_hook(hook: Hook):
         Hook.PRE_APPLYPATCH: [],
         Hook.POST_APPLYPATCH: [],
         Hook.PRE_COMMIT: [],
-        Hook.PREPARE_COMMIT_MSG: ['commit_msg_file', 'commit_source?', 'sha1?'], #? indc optional
+        Hook.PREPARE_COMMIT_MSG: ['commit_msg_file', 'commit_source?', 'sha1?'],  # ? indc optional
         Hook.COMMIT_MSG: ['commit_log_file'],
         Hook.POST_COMMIT: [],
         Hook.PRE_REBASE: ['upstream', 'rebase_branch?'],
@@ -40,7 +40,7 @@ def get_args_for_hook(hook: Hook):
         Hook.PRE_RECEIVE: [],
         Hook.UPDATE: ['ref_updating', 'old_object', 'new_object'],
         Hook.POST_RECEIVE: [],
-        Hook.POST_UPDATE: [], # variable args...
+        Hook.POST_UPDATE: [],  # variable args...
         Hook.PRE_AUTO_GC: [],
         Hook.POST_REWRITE: ['invoker'],
     }[hook]

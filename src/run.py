@@ -3,13 +3,36 @@ import os.path
 import subprocess
 import sys
 import platform
+from src.hooks import Hook
+from src.logger import Logger
+
+log = Logger.get_logger()
 
 
-def _get_py_hook_type(hook_type: str) -> str:
-    if os.path.exists(f'./.barb/{hook_type}'):
-        return 'SHELL'
-    elif os.path.exists(f'./.barb/{hook_type}.py'):
-        return 'PYTHON'
+def _get_hook_path(hook: str):
+    if not os.path.exists(f'./.barb/{hook}') and not os.path.exists(f'./.barb/{hook}.py'):
+        return None
+
+    if os.path.isdir(f'./.barb/{hook}'):
+
+        op_sys = platform.system()
+        if op_sys == 'Linux' and os.path.isfile(f'./.barb/{hook}/linux'):
+            return f'./.barb/{hook}/linux'
+        elif op_sys == 'Linux' and os.path.isfile(f'./.barb/{hook}/linux.py'):
+            return f'./.barb/{hook}/linux.py'
+        elif op_sys == 'Windows' and os.path.isfile(f'./.barb/{hook}/windows'):
+            return f'./.barb/{hook}/windows'
+        elif op_sys == 'Windows' and os.path.isfile(f'./.barb/{hook}/windows.py'):
+            return f'./.barb/{hook}/windows.py'
+        elif op_sys == 'Darwin' and os.path.isfile(f'./.barb/{hook}/darwin'):
+            return f'./.barb/{hook}/darwin'
+        elif op_sys == 'Darwin' and os.path.isfile(f'./.barb/{hook}/darwin.py'):
+            return f'./.barb/{hook}/darwin.py'
+
+    elif os.path.isfile(f'./.barb/{hook}'):
+        return f'./.barb/{hook}'
+    elif os.path.isfile(f'./.barb/{hook}.py'):
+        return f'./.barb/{hook}.py'
     else:
         return None
 
@@ -21,40 +44,38 @@ def _get_exec_program() -> str:
     elif operating_system == 'Windows':
         return 'powershell'
     else:
-        print("Unsupported operating system.")
+        log.error("Unsupported operating system.")
 
 
-def _execute_shell_hook(hook_type: str, args):
+def _execute_shell_hook(hook_path: str, args):
     try:
-        hook_path = f'./.barb/{hook_type}'
+        new_hook_path = hook_path
         for arg in args:
-            hook_path += f' {str(arg)}'
+            new_hook_path += f' {str(arg)}'
 
-        subprocess.run([_get_exec_program(), hook_path])
+        subprocess.run([_get_exec_program(), new_hook_path])
     except Exception as e:
-        print(f'An exception occurred when attempting to execute the git hook {hook_type}.')
-        print(e)
+        log.error(f'An exception occurred when attempting to execute the git hook {hook_path}.', e)
         sys.exit(1)
 
 
-def _execute_python_hook(hook_type: str):
-    spec = importlib.util.spec_from_file_location(hook_type, f"./.barb/{hook_type}.py")
+def _execute_python_hook(hook_path: str, args):
+    spec = importlib.util.spec_from_file_location(hook_path, hook_path)
     foo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(foo)
 
     if not hasattr(foo, 'hook'):
-        print('Invalid python git hook. Must have "hook" function to run.')
+        log.error('Invalid python git hook. Must have "hook" function to run.')
 
     try:
-        res = foo.hook()
+        res = foo.hook(*args)
 
         if res is not None and not res:
-            print(f"Failure indicated by hook function in {hook_type}.py via return value. Aborting.")
+            log.error(f"Failure indicated by hook function in {hook_path} via return value. Aborting.")
             sys.exit(1)
 
     except Exception as e:
-        print(f"Exception encountered in hook {hook_type}.py. Aborting.")
-        print(e)
+        log.error(f"Exception encountered in hook {hook_path}. Aborting.", e)
         sys.exit(1)
 
 
@@ -65,12 +86,12 @@ def run_hook(params):
     if len(params) > 1:
         args = params[1:]
 
-    hook_type = _get_py_hook_type(hook)
+    hook_path = _get_hook_path(hook)
+    if not hook_path:
+        return None
 
-    if not hook_type:
-        return
-
+    hook_type = "PYTHON" if hook_path.endswith(".py") else "SHELL"
     if hook_type == 'SHELL':
-        _execute_shell_hook(hook, args)
+        _execute_shell_hook(hook_path, args)
     elif hook_type == 'PYTHON':
-        _execute_python_hook(hook)
+        _execute_python_hook(hook_path, args)
