@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "About to commit...\n"
+echo "About to commit..."
