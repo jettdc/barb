@@ -50,8 +50,8 @@ def _execute_python_hook(hook_type: str):
 
 def run_hook(params):
     hook = params[0]
-    args = None
 
+    args = []
     if len(params) > 1:
         args = params[1:]
 

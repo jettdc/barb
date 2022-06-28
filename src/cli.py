@@ -17,7 +17,7 @@ def main():
 
     elif command[0] == 'install':
         install_base_hooks()
-        print("Successfully installed git hooks.")
+        print("[barb] Successfully installed git hooks.")
 
     elif command[0] == 'run':
         if len(command) < 2:
