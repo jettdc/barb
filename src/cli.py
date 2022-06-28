@@ -27,7 +27,7 @@ def main():
         if command[1] not in get_hook_names():
             print('Invalid git hook type.')
             return
-        print(command)
+
         run_hook(command[1:])
     else:
         print("Unrecognized ocommand.")

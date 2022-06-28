@@ -2,7 +2,7 @@ import importlib.util
 import os.path
 import subprocess
 import sys
-
+import platform
 
 def _get_py_hook_type(hook_type: str) -> str:
     if os.path.exists(f'./.barb/{hook_type}'):
@@ -14,6 +14,8 @@ def _get_py_hook_type(hook_type: str) -> str:
 
 
 def _execute_shell_hook(hook_type: str, args):
+    print(platform.system())
+
     try:
         hook_path = f'./.barb/{hook_type}'
         print(args)
