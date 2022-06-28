@@ -17,8 +17,8 @@ def _execute_shell_hook(hook_type: str, args):
     try:
         hook_path = f'./.barb/{hook_type}'
         print(args)
-        # for arg in args:
-        #     hook_path += f' {str(arg)}'
+        for arg in args:
+            hook_path += f' {str(arg)}'
 
         subprocess.run(['bash', hook_path])
     except Exception as e:
