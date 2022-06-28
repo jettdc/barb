@@ -23,6 +23,10 @@ class Hook(Enum):
     POST_REWRITE = 'post-rewrite'
     PRE_PUSH = 'pre-push'
 
+def get_hook_from_str(name: str):
+    for hook in Hook:
+        if hook.value == name:
+            return hook
 
 def get_args_for_hook(hook: Hook):
     return {

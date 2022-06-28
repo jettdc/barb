@@ -2,6 +2,7 @@ from src.install import install_base_hooks
 from src.hooks import get_hook_names
 from src.logger import Logger
 from src.run import run_hook
+from src.ls import ls
 from src.init import init
 import argparse
 
@@ -16,12 +17,15 @@ def main():
     command = parser.parse_args().command
 
     if command[0] == 'init':
-        init()
-        log.info("Successfully initialized & installed git hooks.")
+        if init():
+            log.info("Successfully initialized & installed git hooks.")
 
     elif command[0] == 'install':
-        install_base_hooks()
-        log.info("Successfully installed git hooks.")
+        if install_base_hooks():
+            log.info("Successfully installed git hooks.")
+
+    elif command[0] == 'ls' or command[0] == 'list':
+        ls()
 
     elif command[0] == 'run':
         if len(command) < 2:

@@ -1,6 +1,8 @@
 from src.install import install_base_hooks
+from src.logger import Logger
 import os
 
+log = Logger.get_logger()
 
 def _is_initialized():
     return os.path.isdir('./.barb')
@@ -31,11 +33,14 @@ def _initialize():
 
 def init():
     if not _is_git_repo():
-        print('no existing git repository found. type "git init" to initialize one.')
-        return
+        log.error('No existing git repository found. Type "git init" to initialize one.')
+        return False
 
     if _is_initialized():
-        print('barb already initialized. To install the hooks, run\n\tbarb install')
-        return
+        log.error('Already initialized. To install the hooks, run\n\tbarb install')
+        return False
 
     _initialize()
+
+    return True
+
