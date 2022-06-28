@@ -11,6 +11,8 @@ def main():
     parser.add_argument('command', type=str, nargs='+')
 
     command = parser.parse_args().command
+    print(">>>>>>>>>", command[1:])
+
     if command[0] == 'init':
         init()
 
@@ -26,7 +28,7 @@ def main():
         if command[1] not in get_hook_names():
             print('Invalid git hook type.')
             return
-        print(">>>>>>>>>", command[1:])
+
         run_hook(command[1:])
     else:
         print("Unrecognized ocommand.")
