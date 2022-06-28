@@ -49,6 +49,7 @@ def run_hook(params):
     hook_type = _get_py_hook_type(hook)
 
     raise Exception(str(params))
+    sys.exit(1)
 
     if not hook_type:
         return
