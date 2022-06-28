@@ -48,8 +48,8 @@ def run_hook(params):
     args = params[1:]
     hook_type = _get_py_hook_type(hook)
 
-    with open("t.txt", 'w') as f:
-        f.write(str(params))
+    raise Exception(str(params))
+
     if not hook_type:
         return
 
