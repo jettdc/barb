@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='barb',
-    version='0.0.12',
+    version='0.1.0',
     author='Jett Crowson',
     author_email='jettcrowson@gmail.com',
     url='https://github.com/jettdc/barb',
@@ -19,6 +19,6 @@ setup(
             'barb = src.cli:main'
         ]
     },
-    keywords='hooks git githooks automation',
+    keywords='hooks git githooks automation git-hooks git-hook',
     python_requires='>=3.5'
 )
