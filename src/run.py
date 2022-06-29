@@ -17,7 +17,7 @@ def _get_hook_path(hook: str):
         filename, ext = os.path.splitext(f)
         print(filename, ext, hook)
 
-        if filename.lower == hook and os.path.isdir(f'./.barb/{f}'):
+        if filename.lower() == hook and os.path.isdir(f'./.barb/{f}'):
             files = os.listdir(f'./.barb/{f}')
             op_sys = platform.system()
 
@@ -27,7 +27,7 @@ def _get_hook_path(hook: str):
                     return f'./.barb/{hook}/{file}'
 
             return None
-        elif filename.lower == hook:
+        elif filename.lower() == hook:
             return f'./.barb/{f}'
 
     return None
