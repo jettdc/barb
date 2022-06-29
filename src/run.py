@@ -13,21 +13,23 @@ log = Logger.get_logger()
 
 
 def _get_hook_path(hook: str):
-    if not os.path.exists(f'./.barb/{hook}') and not os.path.exists(f'./.barb/{hook}.py'):
-        return None
+    for f in os.listdir('./.barb'):
+        filename, ext = os.path.splitext(f)
 
-    if os.path.isdir(f'./.barb/{hook}'):
-        files = os.listdir(f'./.barb/{hook}')
-        op_sys = platform.system()
+        if filename.lower == hook and os.path.isdir(f'./.barb/{f}'):
+            files = os.listdir(f'./.barb/{f}')
+            op_sys = platform.system()
 
-        for file in files:
-            filename, ext = os.path.splitext(file)
-            if filename.lower() == op_sys.lower():
-                return f'./.barb/{hook}/{file}'
+            for file in files:
+                filename, ext = os.path.splitext(file)
+                if filename.lower() == op_sys.lower():
+                    return f'./.barb/{hook}/{file}'
 
-        return None
+            return None
+        elif filename.lower == hook:
+            return f'./.barb/{f}'
 
-    return f'./.barb/{hook}'
+    return None
 
 
 def _get_appropriate_interpreter(hook_path) -> InterpreterConfig:
