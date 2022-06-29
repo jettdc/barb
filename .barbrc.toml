@@ -1,13 +1,5 @@
 # none [default] | windows | linux | osx | [windows, linux, ...]
-os-lock = 'windows'
-
-# powershell [default] | cmd | path-to-another-interpreter
-#windows-interpreter = 'powershell'
-#interpreter-args = ['-ExecutionPolicy', 'Unrestricted', '-File']
-windows-interpreter = 'bash'
-
-# os.windows.interpreters.ps1 = 'powershell'
-# os.windows.interpreters.ps1.args = ['-ExecutionPolicy', 'Unrestricted', '-File']
+os-lock = 'none'
 
 [os.windows.default]
 interpreter = 'bash'
@@ -16,6 +8,6 @@ interpreter = 'bash'
 interpreter = 'powershell'
 args = ['-ExecutionPolicy', 'Unrestricted', '-File']
 
-[os.linux.ps1]
-interpreter = 'powershell'
-args = ['Test']
+[os.linux.sh]
+interpreter = 'fakeshell'
+args = ['--TestArg', '998']

@@ -11,7 +11,7 @@ def main():
     log = Logger.get_logger()
 
     parser = argparse.ArgumentParser(prog='barb',
-                                     description='Python Hooker')
+                                     description='Effortless, cross platform git hooks')
     parser.add_argument('command', type=str, nargs='+')
 
     command = parser.parse_args().command
@@ -47,6 +47,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-
+    # main()
     # Don't support interactive flag, doesn't work on windows
+    pass

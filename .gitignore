@@ -136,4 +136,4 @@ test.py
 publish.sh
 install.sh
 
-.barb/version-cache
+.barb/.version-cache

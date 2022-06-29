@@ -6,16 +6,16 @@ import os
 
 
 def _verify_version_change(v):
-    with open('./.barb/version-cache', 'r') as f:
+    with open('./.barb/.version-cache', 'r') as f:
         return f.readline() != v
 
 
 def _version_cache_exists():
-    return os.path.exists('./.barb/version-cache')
+    return os.path.exists('./.barb/.version-cache')
 
 
 def _write_version_cache(version):
-    with open('./.barb/pre-push-cache.txt', 'w') as f:
+    with open('./.barb/.version-cache', 'w') as f:
         f.write(version)
 
 
