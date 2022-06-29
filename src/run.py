@@ -15,9 +15,9 @@ log = Logger.get_logger()
 def _get_hook_path(hook: str):
     for f in os.listdir('./.barb'):
         filename, ext = os.path.splitext(f)
-        print(filename, ext, hook)
 
         if filename.lower() == hook and os.path.isdir(f'./.barb/{f}'):
+            print('inhere')
             files = os.listdir(f'./.barb/{f}')
             op_sys = platform.system()
 
