@@ -19,19 +19,17 @@ def _write_version_cache(version):
         f.write(version)
 
 
-def hook(stdin, *args):
+def hook(*args):
     pushing_to = sys.stdin.readline().split(" ")[2]
-
-    print("Pre hook for push to", pushing_to)
-
     if pushing_to != 'refs/heads/main':
         print("Skipping publish since not pushing to main.")
         return
 
+    load_dotenv()
     pypi_usr, pypi_pwd = os.environ.get('PYPI_USERNAME'), os.environ.get('PYPI_PASSWORD')
-
     if pypi_usr is None or pypi_pwd is None:
         print('Skipping PyPi publish because PyPi credentials are missing from the environment.')
+        return
 
     print('Publishing barb to PyPi:')
 

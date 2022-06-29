@@ -73,7 +73,7 @@ def _execute_python_hook(hook_path: str, args):
         log.error('Invalid python git hook. Must have "hook" function to run.')
 
     try:
-        res = foo.hook(sys.stdin, *args)
+        res = foo.hook(*args)
 
         if res is not None and not res:
             log.error(f"Failure indicated by hook function in {hook_path} via return value. Aborting.")
