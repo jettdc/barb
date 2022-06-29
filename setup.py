@@ -21,5 +21,6 @@ setup(
         ]
     },
     keywords='hooks git githooks automation git-hooks git-hook',
-    python_requires='>=3.5'
+    python_requires='>=3.5',
+    install_requires=['toml', 'python-dotenv', 'jetts-tools']
 )

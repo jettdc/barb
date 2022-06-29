@@ -55,5 +55,26 @@ Alternatively, when organized in folders, different scripts can be set to run de
     └── windows.ps1
 ```
 
+## .barbrc.toml
+A configuration file is automatically created when the command `barb init` is run. The following are valid configurations
+- `os-lock`
+  - If enabled, git hooks will only attempt to execute on the specified operating system. Otherwise, they will be skipped.
+  - ex. `os-lock = windows`
+- `[os.$OS$.$FILE_EXT$]`
+  - `interpreter`
+    - The name (or path) of the interpreter to use for the file extension.
+  - `args`
+    - A list of arguments for the interpreter.
+    - Note: the arguments are placed before the git hook path.
+  - ```shell
+    # Special Case: default interpreter for file ext with no interpreter specified
+    [os.linux.default] 
+    interpreter = 'bash'
+  - ```shell
+    # executes ps1 files as "powershell -ExecutionPolicy Unrestricted -File ./.barb/git-hook-name.ps1"
+    [os.windows.ps1]
+    interpreter = 'powershell'
+    args = ['-ExecutionPolicy', 'Unrestricted', '-File']
+
 ### TODO:
 - line endings, `barb sanitize` to sanitize the hooks?

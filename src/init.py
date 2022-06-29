@@ -25,7 +25,7 @@ def _initialize():
         os.mkdir('.barb')
 
     if not _has_barbrc():
-        with open('./.barbrc.toml') as f:
+        with open('./.barbrc.toml', 'w') as f:
             f.write('\n')
 
     install_base_hooks()
