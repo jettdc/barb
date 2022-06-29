@@ -30,7 +30,7 @@ def hook(*args):
         print('Skipping PyPi publish because PyPi credentials are missing from the environment.')
 
     print('Publishing barb to PyPi:')
-    module = SourceFileLoader("version","./src/version").load_module()
+    module = SourceFileLoader("version","./src/version.py").load_module()
     v = module.version
 
     if not _version_cache_exists():
