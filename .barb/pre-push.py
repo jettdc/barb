@@ -31,7 +31,7 @@ def hook(*args):
 
     print('Publishing barb to PyPi:')
     module = SourceFileLoader("version","./src/version.py").load_module()
-    v = module.version
+    v = module.VERSION
 
     if not _version_cache_exists():
         _create_version_cache(v)
