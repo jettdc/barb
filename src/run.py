@@ -17,7 +17,6 @@ def _get_hook_path(hook: str):
         filename, ext = os.path.splitext(f)
 
         if filename.lower() == hook and os.path.isdir(f'./.barb/{f}'):
-            print('inhere')
             files = os.listdir(f'./.barb/{f}')
             op_sys = platform.system()
 
@@ -98,7 +97,6 @@ def run_hook(params):
         args = params[1:]
 
     hook_path = _get_hook_path(hook)
-    print(hook_path)
     if not hook_path:
         return None
 

@@ -16,3 +16,4 @@ def hook(*args):
         print('Skipping PyPi publish because PyPi credentials are missing from the environment.')
 
     print('Publishing barb to PyPi:')
+
