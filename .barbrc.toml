@@ -8,3 +8,14 @@ windows-interpreter = 'bash'
 
 # os.windows.interpreters.ps1 = 'powershell'
 # os.windows.interpreters.ps1.args = ['-ExecutionPolicy', 'Unrestricted', '-File']
+
+[os.windows.default]
+interpreter = 'bash'
+
+[os.windows.ps1]
+interpreter = 'powershell'
+args = ['-ExecutionPolicy', 'Unrestricted', '-File']
+
+[os.linux.ps1]
+interpreter = 'powershell'
+args = ['Test']

@@ -54,3 +54,6 @@ Alternatively, when organized in folders, different scripts can be set to run de
     ├── darwin
     └── windows.ps1
 ```
+
+### TODO:
+- line endings, `barb sanitize` to sanitize the hooks?

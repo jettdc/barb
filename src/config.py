@@ -1,16 +1,23 @@
+import sys
 from dataclasses import dataclass
 import toml
 from typing import Dict, Union, List
 import platform
+from jettools import dict_tools
 
+@dataclass
+class InterpreterConfig:
+    ext: str
+    cmd: str
+    args : List[str]
 
 @dataclass
 class BarbConfig:
     current_os: str
     current_os_family: str
     os_lock: str
-    windows_interpreter: str
-    interpreter_args: List[str]
+    default_interpreter: InterpreterConfig
+    interpreters: List[InterpreterConfig]
 
 
 class BarbConfigurationException(Exception):
@@ -32,8 +39,8 @@ class Config:
             current_os=self._get_current_os(),
             current_os_family=self._get_current_os_family(),
             os_lock=self._get_os_lock(),
-            windows_interpreter=self._get_windows_interpreter(),
-            interpreter_args=self._get_interpreter_args(),
+            default_interpreter=self._get_default_interpreter(),
+            interpreters=self._get_interpreters(),
         )
 
     @staticmethod
@@ -80,6 +87,46 @@ class Config:
         else:
             return self.config.os_lock == self.config.current_os
 
+    def _get_default_interpreter(self):
+        default_interpreter_config = dict_tools.get(self.loaded, ['os', self._get_current_os(), 'default'])
+        if default_interpreter_config is None:
+            return InterpreterConfig('default', 'bash', [])
+
+        interpreter = default_interpreter_config.get('interpreter')
+        if interpreter is None:
+            raise BarbConfigurationException('Invalid config. Missing interpreter for default.')
+
+        args = default_interpreter_config.get('args')
+        if args is not None and not isinstance(args, list):
+            raise BarbConfigurationException('Invalid config. Interpreter args must be a list.')
+        elif args is None:
+            args = []
+
+        return InterpreterConfig('default', interpreter, args)
+
+    def _get_interpreters(self) -> List[InterpreterConfig]:
+        interpreters = []
+
+        other_interpreters = dict_tools.get(self.loaded, ['os', self._get_current_os()])
+        if other_interpreters is None or not isinstance(other_interpreters, dict):
+            return []
+
+        for k, v in other_interpreters.items():
+            if k == 'default':
+                continue
+
+            interpreter = v.get('interpreter')
+            if interpreter is None:
+                raise BarbConfigurationException('Invalid config. Missing interpreter for default.')
+
+            args = v.get('args')
+            if args is not None and not isinstance(args, list):
+                raise BarbConfigurationException('Invalid config. Interpreter args must be a list.')
+            elif args is None:
+                args = []
+
+            interpreters.append(InterpreterConfig(k, interpreter, args))
+        return interpreters
 
     def _get_windows_interpreter(self) -> Union[str, None]:
         arg = self.loaded.get('windows-interpreter')
@@ -100,5 +147,6 @@ class Config:
 
         return arg
 
-# if __name__ == "__main__":
-# load_config()
+if __name__ == "__main__":
+    # sys.path.append('../')
+    print(Config.get_instance().config)

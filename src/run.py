@@ -88,7 +88,7 @@ def run_hook(params):
 
     if not Config.get_instance().os_lock_ok():
         log.error(f'Skipping git hook {hook} because current os does not match required os.')
-        log.error(f'Expected: {Config.get_instance().config.os_lock} : Actual: {Config.get_instance().config.current_os}')
+        log.error(f'Expected {Config.get_instance().config.os_lock}, actual {Config.get_instance().config.current_os}')
         sys.exit(0)
 
     args = []
