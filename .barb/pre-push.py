@@ -21,6 +21,7 @@ def _create_version_cache(version):
 
 
 def hook(*args):
+    print(os.getcwd())
     load_dotenv()
 
     pypi_usr, pypi_pwd = os.environ.get('PYPI_USERNAME'), os.environ.get('PYPI_PASSWORD')
