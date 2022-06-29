@@ -135,3 +135,5 @@ test.py
 
 publish.sh
 install.sh
+
+.barb/pre-push-cache.txt

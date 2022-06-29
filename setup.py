@@ -1,11 +1,12 @@
 from setuptools import setup, find_packages
+from src.version import VERSION
 
 with open('README.md') as f:
     readme = f.read()
 
 setup(
     name='barb',
-    version='0.2.1',
+    version=VERSION,
     author='Jett Crowson',
     author_email='jettcrowson@gmail.com',
     url='https://github.com/jettdc/barb',
