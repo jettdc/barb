@@ -20,7 +20,9 @@ def _write_version_cache(version):
 
 
 def hook(stdin, *args):
-    print(args, stdin)
+    print(args)
+    for line in stdin.readlines():
+        print(line)
 
     pypi_usr, pypi_pwd = os.environ.get('PYPI_USERNAME'), os.environ.get('PYPI_PASSWORD')
 
