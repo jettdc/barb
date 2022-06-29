@@ -19,9 +19,8 @@ def _write_version_cache(version):
         f.write(version)
 
 
-def hook(*args):
-    print(args, os.environ.get('remote_ref'))
-    load_dotenv()
+def hook(stdin, *args):
+    print(args, stdin)
 
     pypi_usr, pypi_pwd = os.environ.get('PYPI_USERNAME'), os.environ.get('PYPI_PASSWORD')
 
