@@ -95,6 +95,7 @@ def run_hook(params):
         args = params[1:]
 
     hook_path = _get_hook_path(hook)
+    print(hook_path)
     if not hook_path:
         return None
 
