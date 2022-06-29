@@ -1,5 +1,5 @@
 from .hooks import Hook, add, get_args_for_hook
-from typing import List
+import os
 
 
 def _get_base_hook(name: str, nargs: int) -> str:
@@ -7,7 +7,7 @@ def _get_base_hook(name: str, nargs: int) -> str:
     for i in range(nargs):
         args += f' ${i + 1}'
 
-    return f'#!/bin/sh\n\nbarb run {name}{args}\n'
+    return f'#!/bin/sh{os.linesep}{os.linesep}barb run {name}{args}{os.linesep}'
 
 
 def install_base_hooks():

@@ -2,6 +2,8 @@ import importlib.util
 import os.path
 import subprocess
 import sys
+from typing import Union, List, Dict
+from src.config import InterpreterConfig
 from src.config import Config
 import platform
 from src.hooks import Hook
@@ -27,16 +29,17 @@ def _get_hook_path(hook: str):
 
     return f'./.barb/{hook}'
 
-
-def _get_exec_program() -> str:
+def _get_appropriate_interpreter(hook_path) -> InterpreterConfig:
     config = Config.get_instance()
-    operating_system = config.config.current_os
-    if operating_system == 'linux' or operating_system == 'darwin':
-        return 'bash'
-    elif operating_system == 'windows':
-        return config.config.windows_interpreter
-    else:
-        log.error("Unsupported operating system.")
+
+    filename, ext = os.path.splitext(hook_path)
+    config = Config.get_instance().config
+    for interpreter in config.interpreters:
+        if interpreter.ext.lower() == ext.lower():
+            return interpreter
+    return config.default_interpreter
+
+
 
 
 def _execute_shell_hook(hook_path: str, args):
@@ -44,9 +47,9 @@ def _execute_shell_hook(hook_path: str, args):
         new_hook_path = hook_path
         for arg in args:
             new_hook_path += f' {str(arg)}'
-        interpreter_args = Config.get_instance().config.interpreter_args
-        process_result = subprocess.run([_get_exec_program()] + interpreter_args + [new_hook_path], shell=True, stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE, timeout=2)
+
+        interpreter = _get_appropriate_interpreter(hook_path)
+        process_result = subprocess.run([interpreter.cmd] + interpreter.args + [new_hook_path], shell=False)
 
         if process_result.returncode != 0:
             log.error('Failed to run the git hook script.')
@@ -57,7 +60,6 @@ def _execute_shell_hook(hook_path: str, args):
         if process_result.stdout:
             log.info(process_result.stdout.decode())
 
-        # subprocess.run([_get_exec_program(), new_hook_path])
     except Exception as e:
         log.error(f'An exception occurred when attempting to execute the git hook {hook_path}.', e)
         sys.exit(1)

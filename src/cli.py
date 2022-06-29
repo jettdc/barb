@@ -1,11 +1,9 @@
-import sys
-
 from src.install import install_base_hooks
 from src.hooks import get_hook_names
 from src.logger import Logger
 from src.run import run_hook
-from src.ls import ls
 from src.init import init
+from src.ls import ls
 import argparse
 
 
@@ -28,6 +26,11 @@ def main():
 
     elif command[0] == 'ls' or command[0] == 'list':
         ls()
+
+    elif command[0] == 'sanitize':
+        # sanitize()
+        log.info('Functionality not yet implemented.')
+        return
 
     elif command[0] == 'run':
         if len(command) < 2:
