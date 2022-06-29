@@ -20,9 +20,13 @@ def _write_version_cache(version):
 
 
 def hook(stdin, *args):
-    print(args)
-    for line in stdin.readlines():
-        print(line)
+    pushing_to = sys.stdin.readline().split(" ")[2]
+
+    print("Pre hook for push to", pushing_to)
+
+    if pushing_to != 'refs/heads/main':
+        print("Skipping publish since not pushing to main.")
+        return
 
     pypi_usr, pypi_pwd = os.environ.get('PYPI_USERNAME'), os.environ.get('PYPI_PASSWORD')
 
