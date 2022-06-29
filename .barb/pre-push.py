@@ -1,13 +1,14 @@
 import sys
+from importlib.machinery import SourceFileLoader
 
 from dotenv import load_dotenv
-from src.version import VERSION
 import os
 
 
-def _verify_version_change():
+
+def _verify_version_change(v):
     with open('./.barb/pre-push-cache.txt', 'r') as f:
-        return f.readline() != VERSION
+        return f.readline() != v
 
 
 def _version_cache_exists():
@@ -28,10 +29,12 @@ def hook(*args):
         print('Skipping PyPi publish because PyPi credentials are missing from the environment.')
 
     print('Publishing barb to PyPi:')
+    module = SourceFileLoader("version","./src/version").load_module()
+    v = module.version
 
     if not _version_cache_exists():
-        _create_version_cache(VERSION)
+        _create_version_cache(v)
     else:
-        if not _verify_version_change():
+        if not _verify_version_change(v):
             print('Package version number has not been changed since last push. Cancelling.')
             sys.exit(1)
