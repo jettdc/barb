@@ -29,17 +29,14 @@ def _get_hook_path(hook: str):
 
     return f'./.barb/{hook}'
 
-def _get_appropriate_interpreter(hook_path) -> InterpreterConfig:
-    config = Config.get_instance()
 
+def _get_appropriate_interpreter(hook_path) -> InterpreterConfig:
     filename, ext = os.path.splitext(hook_path)
     config = Config.get_instance().config
     for interpreter in config.interpreters:
         if interpreter.ext.lower() == ext.lower():
             return interpreter
     return config.default_interpreter
-
-
 
 
 def _execute_shell_hook(hook_path: str, args):
